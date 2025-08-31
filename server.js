@@ -8,11 +8,11 @@ const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
 
-// Servir los archivos estáticos de la carpeta 'game'
-app.use(express.static('game'));
+// Servir los archivos estáticos de la carpeta raíz del proyecto
+app.use(express.static(__dirname));
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/game/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 io.on('connection', (socket) => {
