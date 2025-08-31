@@ -8,6 +8,8 @@ const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
 
+let connectedPlayers = 0;
+
 // Servir los archivos estáticos de la carpeta raíz del proyecto
 app.use(express.static(__dirname));
 
@@ -16,11 +18,23 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('Un jugador se ha conectado:', socket.id);
+  connectedPlayers++;
+  console.log(`Jugador conectado. Total: ${connectedPlayers}`);
+
+  // Si hay 2 jugadores, notificar a ambos que la partida está lista.
+  if (connectedPlayers === 2) {
+    io.emit('players_ready');
+  }
+
+  // Si hay más de 2, entra en modo espectador (funcionalidad futura)
+  if (connectedPlayers > 2) {
+    socket.emit('spectator_mode');
+  }
 
   // Evento para cuando un jugador se desconecta
   socket.on('disconnect', () => {
-    console.log('Un jugador se ha desconectado:', socket.id);
+    connectedPlayers--;
+    console.log(`Jugador desconectado. Total: ${connectedPlayers}`);
     // Notificar al otro jugador que su oponente se ha ido
     socket.broadcast.emit('oponente_desconectado');
   });

@@ -344,6 +344,29 @@ aside h2 {
 }/*# sourceMappingURL=estilos.css.map */
 
 /* Estilos para el modal de configuración */
+#game-status-console {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 0.5em 1.5em;
+    border-radius: 20px;
+    z-index: 999;
+    font-family: sans-serif;
+    font-size: 0.9em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+#game-status-console p.success {
+    color: #8cff8c;
+}
+
+#game-status-console p.error {
+    color: #ff8c8c;
+}
+
 .modal-overlay {
     position: fixed;
     top: 0;

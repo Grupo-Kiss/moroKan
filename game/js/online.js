@@ -3,6 +3,14 @@
 // Conexión inicial al servidor. Se asume que el servidor está en el mismo host y puerto.
 const socket = io();
 
+// Referencia a la consola de estado y función para actualizarla
+const statusConsole = document.getElementById('game-status-console');
+function updateStatus(message, type = 'info') {
+    if (statusConsole) {
+        statusConsole.innerHTML = `<p class="${type}">${message}</p>`;
+    }
+}
+
 // --- EMITIR EVENTOS (enviar datos al servidor) ---
 
 /**
@@ -20,6 +28,17 @@ function enviarMovimiento(moveData) {
 // Se ejecuta cuando la conexión con el servidor es exitosa
 socket.on('connect', () => {
   console.log('Conectado al servidor con ID:', socket.id);
+  updateStatus('Conectado. Esperando a un oponente...');
+});
+
+// El servidor nos informa que un oponente se ha conectado y la partida está lista
+socket.on('players_ready', () => {
+    updateStatus('¡Oponente encontrado! La partida puede comenzar.', 'success');
+});
+
+// El servidor nos informa que somos espectadores
+socket.on('spectator_mode', () => {
+    updateStatus('La partida ya ha comenzado. Estás en modo espectador.', 'info');
 });
 
 // Escucha los movimientos que envía el oponente
@@ -81,8 +100,7 @@ socket.on('movimiento', (moveData) => {
 // Escucha si el oponente se desconecta
 socket.on('oponente_desconectado', () => {
   console.log('El oponente se ha desconectado.');
-  // AQUÍ va tu lógica para pausar el juego o declarar un ganador.
-  alert("Tu oponente se ha desconectado. ¡Has ganado!");
+  updateStatus('Tu oponente se ha desconectado. Esperando a otro jugador...', 'error');
 });
 
 // Se ejecuta cuando el cliente se desconecta del servidor

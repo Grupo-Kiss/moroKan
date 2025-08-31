@@ -95,9 +95,9 @@ class Piece {
                 this.setcolor_bottom_left = COLORS.GREEN;
                 this.setcolor_bottom_right = COLORS.GRAY;
                 if (this.player == PLAYERS.BLACK) {
-                    this.imgTitle = "./imgs/FichasNegras/black-01.svg"
+                    this.imgTitle = "./game/imgs/FichasNegras/black-01.svg"
                 } else {
-                    this.imgTitle = "./imgs/FichasBlancas/white-01.svg"
+                    this.imgTitle = "./game/imgs/FichasBlancas/white-01.svg"
                 }
                 break;
             case 2:
@@ -108,9 +108,9 @@ class Piece {
                 this.setcolor_bottom_left = COLORS.GREEN;
                 this.setcolor_bottom_right = COLORS.ORANGE;
                 if (this.player == PLAYERS.BLACK) {
-                    this.imgTitle = "./imgs/FichasNegras/black-02.svg"
+                    this.imgTitle = "./game/imgs/FichasNegras/black-02.svg"
                 } else {
-                    this.imgTitle = "./imgs/FichasBlancas/white-02.svg"
+                    this.imgTitle = "./game/imgs/FichasBlancas/white-02.svg"
                 }
                 break;
             case 3:
@@ -121,9 +121,9 @@ class Piece {
                 this.setcolor_bottom_left = COLORS.GRAY;
                 this.setcolor_bottom_right = COLORS.MAGENTA;
                 if (this.player == PLAYERS.BLACK) {
-                    this.imgTitle = "./imgs/FichasNegras/black-03.svg"
+                    this.imgTitle = "./game/imgs/FichasNegras/black-03.svg"
                 } else {
-                    this.imgTitle = "./imgs/FichasBlancas/white-03.svg"
+                    this.imgTitle = "./game/imgs/FichasBlancas/white-03.svg"
                 }
                 break;
             case 4:
@@ -134,9 +134,9 @@ class Piece {
                 this.setcolor_bottom_left = COLORS.GREEN;
                 this.setcolor_bottom_right = COLORS.GRAY;
                 if (this.player == PLAYERS.BLACK) {
-                    this.imgTitle = "./imgs/FichasNegras/black-04.svg"
+                    this.imgTitle = "./game/imgs/FichasNegras/black-04.svg"
                 } else {
-                    this.imgTitle = "./imgs/FichasBlancas/white-04.svg"
+                    this.imgTitle = "./game/imgs/FichasBlancas/white-04.svg"
                 }
                 break;
             case 5:
@@ -148,9 +148,9 @@ class Piece {
                 this.setcolor_bottom_left = COLORS.YELLOW;
                 this.setcolor_bottom_right = COLORS.ORANGE;
                 if (this.player == PLAYERS.BLACK) {
-                    this.imgTitle = "./imgs/FichasNegras/black-Qudak.svg"
+                    this.imgTitle = "./game/imgs/FichasNegras/black-Qudak.svg"
                 } else {
-                    this.imgTitle = "./imgs/FichasBlancas/white-Qudak.svg"
+                    this.imgTitle = "./game/imgs/FichasBlancas/white-Qudak.svg"
                 }
                 break;
             case 6:
@@ -161,9 +161,9 @@ class Piece {
                 this.setcolor_bottom_left = COLORS.GREEN;
                 this.setcolor_bottom_right = COLORS.YELLOW;
                 if (this.player == PLAYERS.BLACK) {
-                    this.imgTitle = "./imgs/FichasNegras/black-06.svg"
+                    this.imgTitle = "./game/imgs/FichasNegras/black-06.svg"
                 } else {
-                    this.imgTitle = "./imgs/FichasBlancas/white-06.svg"
+                    this.imgTitle = "./game/imgs/FichasBlancas/white-06.svg"
                 }
                 break;
             case 7:
@@ -174,9 +174,9 @@ class Piece {
                 this.setcolor_bottom_left = COLORS.GREEN;
                 this.setcolor_bottom_right = COLORS.ORANGE;
                 if (this.player == PLAYERS.BLACK) {
-                    this.imgTitle = "./imgs/FichasNegras/black-07.svg"
+                    this.imgTitle = "./game/imgs/FichasNegras/black-07.svg"
                 } else {
-                    this.imgTitle = "./imgs/FichasBlancas/white-07.svg"
+                    this.imgTitle = "./game/imgs/FichasBlancas/white-07.svg"
                 }
                 break;
             case 8:
@@ -187,9 +187,9 @@ class Piece {
                 this.setcolor_bottom_left = COLORS.BLUE;
                 this.setcolor_bottom_right = COLORS.ORANGE;
                 if (this.player == PLAYERS.BLACK) {
-                    this.imgTitle = "./imgs/FichasNegras/black-08.svg"
+                    this.imgTitle = "./game/imgs/FichasNegras/black-08.svg"
                 } else {
-                    this.imgTitle = "./imgs/FichasBlancas/white-08.svg"
+                    this.imgTitle = "./game/imgs/FichasBlancas/white-08.svg"
                 }
                 break;
             case 9:
@@ -200,9 +200,9 @@ class Piece {
                 this.setcolor_bottom_left = COLORS.GRAY;
                 this.setcolor_bottom_right = COLORS.ORANGE;
                 if (this.player == PLAYERS.BLACK) {
-                    this.imgTitle = "./imgs/FichasNegras/black-09.svg"
+                    this.imgTitle = "./game/imgs/FichasNegras/black-09.svg"
                 } else {
-                    this.imgTitle = "./imgs/FichasBlancas/white-09.svg"
+                    this.imgTitle = "./game/imgs/FichasBlancas/white-09.svg"
                 }
                 break;
             case 10:
@@ -213,9 +213,9 @@ class Piece {
                 this.setcolor_bottom_left = COLORS.GREEN;
                 this.setcolor_bottom_right = COLORS.ORANGE;
                 if (this.player == PLAYERS.BLACK) {
-                    this.imgTitle = "./imgs/FichasNegras/black-10.svg"
+                    this.imgTitle = "./game/imgs/FichasNegras/black-10.svg"
                 } else {
-                    this.imgTitle = "./imgs/FichasBlancas/white-10.svg"
+                    this.imgTitle = "./game/imgs/FichasBlancas/white-10.svg"
                 }
                 break;
             case 11:
@@ -226,9 +226,9 @@ class Piece {
                 this.setcolor_bottom_left = COLORS.BLUE;
                 this.setcolor_bottom_right = COLORS.MAGENTA;
                 if (this.player == PLAYERS.BLACK) {
-                    this.imgTitle = "./imgs/FichasNegras/black-11.svg"
+                    this.imgTitle = "./game/imgs/FichasNegras/black-11.svg"
                 } else {
-                    this.imgTitle = "./imgs/FichasBlancas/white-11.svg"
+                    this.imgTitle = "./game/imgs/FichasBlancas/white-11.svg"
                 }
                 break;
         }

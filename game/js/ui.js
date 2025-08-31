@@ -102,7 +102,7 @@ function showNotification(notification, type) {
         notification_element.classList.add('notification_instructions');
 
         embed = document.createElement('embed');
-        embed.src = './imgs/KAN_Reglas.pdf#toolbar=0';
+        embed.src = './game/imgs/KAN_Reglas.pdf#toolbar=0';
         embed.id = 'instructions';
 
         let p = document.createElement('p');
@@ -182,7 +182,7 @@ function createAboutButton(){
     let div = document.createElement('div');
     div.id = 'about_button';
     let img = document.createElement('img');
-    img.src = './imgs/about.png';
+    img.src = './game/imgs/about.png';
     img.title = 'Acerca del juego';
 
     div.addEventListener('click', function(){
