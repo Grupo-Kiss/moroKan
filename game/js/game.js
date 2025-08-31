@@ -461,9 +461,9 @@ function allowMovementForPlayer(player) {
             dom_piece.addEventListener("click", movePiece);
             dom_piece.classList.remove('disabled_piece');
         } else {
-            //Also disables opposite player movements
+            //También deshabilita los movimientos del jugador contrario
             dom_piece.removeEventListener("click", movePiece);
-            // Also grays out disabled pieces
+            // Y pone en gris las piezas deshabilitadas
             dom_piece.classList.add('disabled_piece');
         }
     }

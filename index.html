@@ -11,7 +11,6 @@
 </head>
 <body>
     <main id="main">
-        <h1>Kan</h1>
         <div id="game-status-console"><p>Cargando...</p></div>
         <div id="board">
         </div>
@@ -40,12 +39,21 @@
         <div id="setup-modal" class="modal-content">
             <h2>Configurar Partida</h2>
             <div class="form-group">
-                <label for="player1-name">Jugador 1 (Negras)</label>
-                <input type="text" id="player1-name" value="Negras" placeholder="Introduce tu nombre">
+                <label for="player1-name">Tu Nombre (Jugador 1)</label>
+                <input type="text" id="player1-name" value="Host" placeholder="Introduce tu nombre">
+            </div>
+            <div class="form-group" id="color-selection-group">
+                <label>Elige tu color:</label>
+                <div class="radio-group">
+                    <input type="radio" id="color-black" name="player-color" value="negro" checked>
+                    <label for="color-black">Negras</label>
+                    <input type="radio" id="color-white" name="player-color" value="blanco">
+                    <label for="color-white">Blancas</label>
+                </div>
             </div>
             <div class="form-group">
-                <label for="player2-name">Jugador 2 (Blancas)</label>
-                <input type="text" id="player2-name" value="Blancas" placeholder="Introduce tu nombre">
+                <label for="player2-name">Nombre del Oponente</label>
+                <input type="text" id="player2-name" value="Invitado" placeholder="(se actualizará automáticamente)" disabled>
             </div>
             <div class="modal-buttons">
                 <button id="start-solo-button">Jugar Solo</button>

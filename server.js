@@ -8,7 +8,7 @@ const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
 
-let connectedPlayers = 0;
+let host = null;
 
 // Servir los archivos estáticos de la carpeta raíz del proyecto
 app.use(express.static(__dirname));
@@ -18,24 +18,42 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  connectedPlayers++;
-  console.log(`Jugador conectado. Total: ${connectedPlayers}`);
+  console.log(`Jugador conectado: ${socket.id}`);
 
-  // Si hay 2 jugadores, notificar a ambos que la partida está lista.
-  if (connectedPlayers === 2) {
-    io.emit('players_ready');
+  // Si ya hay un host, este nuevo jugador es el invitado.
+  if (host) {
+    const guestColor = host.color === 'negro' ? 'blanco' : 'negro';
+    console.log(`Es un invitado. Se le asigna el color ${guestColor}`);
+    socket.emit('welcome_guest', { hostName: host.name, assignedColor: guestColor });
   }
 
-  // Si hay más de 2, entra en modo espectador (funcionalidad futura)
-  if (connectedPlayers > 2) {
-    socket.emit('spectator_mode');
-  }
+  // Evento para que el HOST se registre
+  socket.on('register_host', (data) => {
+    host = { id: socket.id, name: data.name, color: data.color };
+    console.log(`Host registrado: ${host.name} con color ${host.color}`);
+    socket.emit('host_registered');
+  });
+
+  // Evento para que el GUEST se registre
+  socket.on('register_guest', (data) => {
+    if (!host) return; // No debería pasar si el flujo es correcto
+
+    const guest = { id: socket.id, name: data.name, color: data.assignedColor };
+    console.log(`Invitado se une: ${guest.name}`);
+
+    // Ambos jugadores están listos, empezamos el juego
+    io.to(host.id).emit('game_start', { yourColor: host.color, opponentName: guest.name });
+    io.to(guest.id).emit('game_start', { yourColor: guest.color, opponentName: host.name });
+  });
 
   // Evento para cuando un jugador se desconecta
   socket.on('disconnect', () => {
-    connectedPlayers--;
-    console.log(`Jugador desconectado. Total: ${connectedPlayers}`);
-    // Notificar al otro jugador que su oponente se ha ido
+    console.log(`Jugador desconectado: ${socket.id}`);
+    if (host && host.id === socket.id) {
+        host = null; // El host se ha ido, el lobby se reinicia
+        console.log("El Host se ha desconectado. Reiniciando lobby.");
+        socket.broadcast.emit('host_disconnected');
+    }
     socket.broadcast.emit('oponente_desconectado');
   });
 

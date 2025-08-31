@@ -25,15 +25,51 @@ function enviarMovimiento(moveData) {
 
 // --- ESCUCHAR EVENTOS (recibir datos del servidor) ---
 
+let myColor = null; // Variable global para guardar el color del jugador
+let isGuest = false; // Nueva variable global para indicar si es invitado
+
 // Se ejecuta cuando la conexión con el servidor es exitosa
 socket.on('connect', () => {
   console.log('Conectado al servidor con ID:', socket.id);
+  // La URL de ngrok se mostrará en setup.js después de que el host inicie la partida online
   updateStatus('Conectado. Esperando a un oponente...');
 });
 
+// NUEVO: El servidor nos da la bienvenida como invitado
+socket.on('welcome_guest', (data) => {
+    isGuest = true;
+    myColor = data.assignedColor; // Asignamos el color que nos dio el servidor
+    updateStatus(`¡Bienvenido! El host ${data.hostName} te ha asignado el color ${myColor}. Introduce tu nombre y únete.`, 'info');
+
+    // Llamar a una función en setup.js para reconfigurar el modal
+    if (typeof configureSetupModalForGuest === 'function') {
+        configureSetupModalForGuest(data.assignedColor, data.hostName);
+    }
+});
+
 // El servidor nos informa que un oponente se ha conectado y la partida está lista
-socket.on('players_ready', () => {
-    updateStatus('¡Oponente encontrado! La partida puede comenzar.', 'success');
+socket.on('game_start', (data) => {
+    myColor = data.yourColor;
+    updateStatus(`¡Partida iniciada! Juegas con ${myColor}. Tu oponente es ${data.opponentName}.`, 'success');
+    
+    // Ocultar el modal de configuración
+    const setupOverlay = document.getElementById('setup-overlay');
+    if(setupOverlay) setupOverlay.style.display = 'none';
+
+    // Actualizar títulos
+    const player1Title = document.querySelector('#player1 h2');
+    const player2Title = document.querySelector('#player2 h2');
+    if (myColor === 'negro') {
+        player1Title.textContent = document.getElementById('player1-name').value || 'Tú';
+        player2Title.textContent = data.opponentName;
+    } else {
+        player1Title.textContent = data.opponentName;
+        player2Title.textContent = document.getElementById('player1-name').value || 'Tú';
+    }
+
+    // Iniciar el tablero y el juego
+    initialize(LAYERS);
+    allowMovementForPlayer(myColor);
 });
 
 // El servidor nos informa que somos espectadores
@@ -103,14 +139,21 @@ socket.on('oponente_desconectado', () => {
   updateStatus('Tu oponente se ha desconectado. Esperando a otro jugador...', 'error');
 });
 
+// NUEVO: El host se ha desconectado
+socket.on('host_disconnected', () => {
+    updateStatus('El host se ha desconectado. La partida ha terminado.', 'error');
+    // Aquí podrías añadir lógica para reiniciar el juego o volver al menú principal
+    location.reload(); // Recargar la página para reiniciar
+});
+
 // Se ejecuta cuando el cliente se desconecta del servidor
 socket.on('disconnect', () => {
   console.log('Te has desconectado del servidor.');
-  alert("Se perdió la conexión con el servidor.");
+  updateStatus("Se perdió la conexión con el servidor.", 'error');
 });
 
 // Maneja errores de conexión
 socket.on('connect_error', (err) => {
   console.error('Error de conexión:', err.message);
-  // podrías mostrar un mensaje en la UI: "Intentando reconectar..."
+  updateStatus("Error de conexión. Intentando reconectar...", 'error');
 });
