@@ -342,3 +342,60 @@ aside h2 {
     font-size: 0.7em;
   }
 }/*# sourceMappingURL=estilos.css.map */
+
+/* Estilos para el modal de configuración */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: rgb(247, 245, 228);
+    padding: 2em;
+    border-radius: 8px;
+    border: 2px solid rgb(255, 242, 169);
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.modal-content h2 {
+    margin-bottom: 1em;
+}
+
+.form-group {
+    margin-bottom: 1em;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5em;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.modal-buttons button {
+    padding: 0.8em 1.5em;
+    border: 1px solid dimgray;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 0 0.5em;
+    background-color: rgb(204, 204, 204);
+}
+
+.modal-buttons button:hover {
+    background-color: #b3b3b3;
+}

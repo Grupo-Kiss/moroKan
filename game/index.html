@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kan</title>
+
+    <link rel="stylesheet" href="css/estilos.css">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <main id="main">
+        <h1>Kan</h1>
+        <div id="board">
+        </div>
+    </main>
+    <section id="controls">
+    </section>
+    <aside id="player1">
+        <h2>Negros</h2>
+        <div class="pieces_board"></div>
+    </aside>
+    <aside id="player2">
+        <h2>Blancos</h2>
+        <div class="pieces_board"></div>
+    </aside>
+
+    <script src="js/data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/build.js"></script>
+    <script src="js/online.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/setup.js"></script>
+
+    <!-- Modal de Configuración de Partida -->
+    <div id="setup-overlay" class="modal-overlay">
+        <div id="setup-modal" class="modal-content">
+            <h2>Configurar Partida</h2>
+            <div class="form-group">
+                <label for="player1-name">Jugador 1 (Negras)</label>
+                <input type="text" id="player1-name" value="Negras" placeholder="Introduce tu nombre">
+            </div>
+            <div class="form-group">
+                <label for="player2-name">Jugador 2 (Blancas)</label>
+                <input type="text" id="player2-name" value="Blancas" placeholder="Introduce tu nombre">
+            </div>
+            <div class="modal-buttons">
+                <button id="start-solo-button">Jugar Solo</button>
+                <button id="start-online-button">Jugar Online</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

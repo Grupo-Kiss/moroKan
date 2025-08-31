@@ -1,0 +1,98 @@
+// game/js/online.js
+
+// Conexión inicial al servidor. Se asume que el servidor está en el mismo host y puerto.
+const socket = io();
+
+// --- EMITIR EVENTOS (enviar datos al servidor) ---
+
+/**
+ * Envía un movimiento al servidor para que lo retransmita al oponente.
+ * @param {object} moveData - Información del movimiento (ej: { from: 'A1', to: 'A2', piece: 'white-01' })
+ */
+function enviarMovimiento(moveData) {
+  if (socket) {
+    socket.emit('movimiento', moveData);
+  }
+}
+
+// --- ESCUCHAR EVENTOS (recibir datos del servidor) ---
+
+// Se ejecuta cuando la conexión con el servidor es exitosa
+socket.on('connect', () => {
+  console.log('Conectado al servidor con ID:', socket.id);
+});
+
+// Escucha los movimientos que envía el oponente
+socket.on('movimiento', (moveData) => {
+  console.log('Movimiento recibido del oponente:', moveData);
+
+  // <<< GEMINI: LÓGICA PARA REPLICAR EL MOVIMIENTO OPONENTE >>>
+
+  // 1. Encontrar la pieza y la celda en el DOM local
+  const pieceObject = PIECE_ARRAY.find(p => p.getPieceId === moveData.pieceId && p.getPlayer === moveData.playerId);
+  const pieceElement = returnPieceElementFromObjectEquivalent(pieceObject);
+  const cellElement = document.getElementById(moveData.toCellId);
+  const cellObject = CELL_ARRAY.find(c => c.getCellId === moveData.toCellId);
+
+  if (!pieceElement || !cellElement || !pieceObject || !cellObject) {
+    console.error('No se encontraron los elementos para replicar el movimiento:', moveData);
+    return;
+  }
+
+  // 2. Levantar la pieza para que sea visible y se pueda posicionar
+  updatePieceZIndex(pieceObject);
+  pieceElement.style.position = 'fixed';
+
+  // 3. Sincronizar la rotación de la pieza
+  pieceObject.setcolor_top_left = moveData.rotation; // Esto necesita una mejor implementación que guarde todos los colores
+  pieceElement.dataset.rotation = moveData.rotation;
+  pieceElement.style.transform = `rotate(${moveData.rotation}deg)`;
+  sychronizeWithArray(PIECE_ARRAY, pieceObject, DATA_TYPES.PIECE);
+
+  // 4. Mover la pieza a la nueva celda
+  pieceElement.style.left = cellElement.dataset.xPosition + 'px';
+  pieceElement.style.top = cellElement.dataset.yPosition + 'px';
+
+  // 5. Actualizar el estado de los objetos locales
+  if (pieceObject.getCellId) {
+      const oldCell = CELL_ARRAY.find(c => c.getCellId === pieceObject.getCellId);
+      if(oldCell) oldCell.setIsEmpty = true;
+  }
+  pieceObject.setCellId = cellObject.getCellId;
+  cellObject.setIsEmpty = false;
+  sychronizeWithArray(PIECE_ARRAY, pieceObject, DATA_TYPES.PIECE);
+  sychronizeWithArray(CELL_ARRAY, cellObject, DATA_TYPES.CELL);
+
+  // 6. Cambiar el turno
+  changeTurn();
+
+  // 7. Verificar si el movimiento resultó en la eliminación de piezas
+  checkAndRemoveSurroundedPiece(pieceObject, checkSurroundingsPieces(cellObject), cellObject);
+
+  // 8. Verificar condición de victoria
+  let win_message = checkWinCondition(pieceObject);
+  if (win_message) {
+      showNotification(win_message, NOTIFICATION_TYPES.VICTORY_MODAL);
+      console.warn(win_message);
+  }
+  // <<< FIN GEMINI >>>
+});
+
+// Escucha si el oponente se desconecta
+socket.on('oponente_desconectado', () => {
+  console.log('El oponente se ha desconectado.');
+  // AQUÍ va tu lógica para pausar el juego o declarar un ganador.
+  alert("Tu oponente se ha desconectado. ¡Has ganado!");
+});
+
+// Se ejecuta cuando el cliente se desconecta del servidor
+socket.on('disconnect', () => {
+  console.log('Te has desconectado del servidor.');
+  alert("Se perdió la conexión con el servidor.");
+});
+
+// Maneja errores de conexión
+socket.on('connect_error', (err) => {
+  console.error('Error de conexión:', err.message);
+  // podrías mostrar un mensaje en la UI: "Intentando reconectar..."
+});

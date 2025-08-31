@@ -208,7 +208,9 @@ function initialize(max_layers) {
     showNotification('',NOTIFICATION_TYPES.INSTRUCTIONS);
 }
 
+/*
 window.onload = function () {
     console.log('inicializando...');
     initialize(LAYERS);
 };
+*/

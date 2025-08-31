@@ -110,6 +110,16 @@ function releasepiece(e) {
         //Now, after placing, it checks if some surrounding piece needs to be removed. It also checks if SELF needed to be removed (called 'suicide')
         checkAndRemoveSurroundedPiece(selected_piece_object, checkSurroundingsPieces(selected_cell_object), selected_cell_object);
 
+        // <<< GEMINI: NOTIFICAR AL SERVIDOR SOBRE EL MOVIMIENTO >>>
+        const moveData = {
+            pieceId: selected_piece_object.getPieceId,
+            playerId: selected_piece_object.getPlayer,
+            toCellId: selected_cell_object.getCellId,
+            rotation: selected_piece_element.dataset.rotation
+        };
+        enviarMovimiento(moveData);
+        // <<< FIN GEMINI >>>
+
         removeRotationButtons();
     } else {
         //Cannot be placed here. The current cell is highghted in red.
